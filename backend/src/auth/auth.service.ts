@@ -15,10 +15,24 @@ export class AuthService {
   ) {}
 
   hello() {
-    return 'Hell';
+    return 'Hellworld';
   }
 
   async register(body: AuthDto): Promise<AuthReponseDto> {
+    const existing_email = await this.auth_repository.findOne({
+      where: {
+        email: body.email,
+      },
+    });
+
+    if (existing_email) {
+      return {
+        status_code: 400,
+        message: 'Email đã tồn tại',
+        success: false,
+      };
+    }
+
     const hashed_password = await argon2.hash(body.password);
 
     const user = await this.auth_repository.save({
@@ -33,5 +47,19 @@ export class AuthService {
       message: 'Đăng kí thành công',
       success: true,
     };
+  }
+
+  async sign_in(email: string) {
+    const user = await this.auth_repository.findOne({
+      where: {
+        email,
+      },
+    });
+
+    if (!user || !user.password) {
+      throw new Error('Invalid email or password');
+    }
+
+    // const verify_password = await argon2.verify(user.password, password);
   }
 }

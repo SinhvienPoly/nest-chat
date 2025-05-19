@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Role } from '../interfaces/role';
 
 @Entity()
 export class Auth {
@@ -22,4 +23,7 @@ export class Auth {
 
   @Column({ default: true })
   is_active: boolean;
+
+  @Column({ default: Role.USER })
+  role: Role;
 }
