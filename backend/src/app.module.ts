@@ -7,10 +7,11 @@ import { AppService } from './app.service';
 import { Auth } from './entity/auth.entity';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { VideoModule } from './video/video.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({}),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -25,6 +26,7 @@ import { UsersModule } from './users/users.module';
     }),
     AuthModule,
     UsersModule,
+    VideoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
