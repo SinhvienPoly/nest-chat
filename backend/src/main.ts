@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 
 import { AppModule } from './app.module';
+import { logger } from './middleware/logger.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -13,6 +14,8 @@ async function bootstrap() {
       transform: true, // tự động chuyển đổi kiểu dữ liệu
     }),
   );
+
+  app.use(logger);
 
   await app.listen(process.env.PORT ?? 3000);
 }

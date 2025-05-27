@@ -16,7 +16,7 @@ interface JwtPayload {
 }
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class VideoGuard implements CanActivate {
   constructor(private jwt_service: JwtService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -33,6 +33,10 @@ export class AuthGuard implements CanActivate {
       // 💡 We're assigning the payload to the request object here
       // so that we can access it in our route handlers
       request['user'] = payload;
+
+      if (payload.role !== Role.Admin) {
+        throw new UnauthorizedException();
+      }
     } catch {
       throw new UnauthorizedException();
     }

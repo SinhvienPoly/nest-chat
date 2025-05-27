@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { VideoController } from './video.controller';
 import { VideoEntity } from '../entity/video.entity';
 import { VideoService } from './video.service';
+import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from '../guards/roles.guard';
 
 @Module({
@@ -12,7 +13,7 @@ import { RolesGuard } from '../guards/roles.guard';
   providers: [
     VideoService,
     {
-      provide: 'APP_GUARD',
+      provide: APP_GUARD,
       useClass: RolesGuard,
     },
   ],

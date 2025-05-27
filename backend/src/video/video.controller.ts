@@ -1,17 +1,15 @@
-import { Body, Controller, Get } from '@nestjs/common';
-
-import { Roles } from '../decorators/roles.recorator';
-import { Role } from '../interfaces/role.enum';
+import { Body, Controller, Get, UseGuards } from '@nestjs/common';
 // import { VideoDto } from '../dto/video.dto';
 import { VideoService } from './video.service';
+import { VideoGuard } from './video.guard';
 
 @Controller('video')
 export class VideoController {
   constructor(private videoService: VideoService) {}
 
   @Get()
-  @Roles(Role.ADMIN)
+  @UseGuards(VideoGuard)
   create() {
-    this.videoService.create();
+    return this.videoService.create();
   }
 }
