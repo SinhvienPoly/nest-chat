@@ -1,5 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import * as cookieParser from 'cookie-parser';
+import * as session from 'express-session';
 
 import { AppModule } from './app.module';
 import { logger } from './middleware/logger.middleware';
@@ -16,6 +18,18 @@ async function bootstrap() {
   );
 
   app.use(logger);
+  app.use(cookieParser());
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET!,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: 1000 * 60 * 60, // 1 giờ
+        httpOnly: true,
+      },
+    }),
+  );
 
   await app.listen(process.env.PORT ?? 3000);
 }
