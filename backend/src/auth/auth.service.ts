@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
+import { Response } from 'express';
 
 import { Auth } from '../entity/auth.entity';
 import { AuthReponseDto } from '../dto/auth-response.dto';
@@ -52,10 +53,16 @@ export class AuthService {
     };
   }
 
-  async login(email: string, password: string): Promise<AuthResponseInterface> {
+  async login(
+    auth: {
+      email: string;
+      password: string;
+    },
+    res: Response,
+  ): Promise<AuthResponseInterface> {
     const user = await this.auth_repository.findOne({
       where: {
-        email,
+        email: auth.email,
       },
     });
 
@@ -67,7 +74,7 @@ export class AuthService {
       };
     }
 
-    const verify_password = await argon2.verify(user.password, password);
+    const verify_password = await argon2.verify(user.password, auth.password);
 
     if (!verify_password) {
       return {
@@ -77,13 +84,18 @@ export class AuthService {
       };
     }
 
+    // response token
     const payload = { sub: user.id, email: user.email, role: user.role };
+    const signToken = await this.jwt_service.signAsync(payload);
+
+    // Save session & cookie
+    res.cookie('cookie', signToken);
 
     return {
       message: 'Đăng nhập thành công',
       success: true,
       status_code: 201,
-      access_token: await this.jwt_service.signAsync(payload),
+      access_token: signToken,
     };
   }
 }
