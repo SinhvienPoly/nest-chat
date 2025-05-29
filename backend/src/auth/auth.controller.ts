@@ -7,14 +7,13 @@ import {
   Post,
   UseGuards,
   Request,
-  Session,
   Res,
 } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
 import { AuthDto } from '../dto/auth.dto';
 import { AuthGuard } from './auth.guard';
-import { Response } from 'express';
+import { Response as ResponseExpress } from 'express';
 
 type LoginDto = { email: string; password: string };
 
@@ -37,7 +36,7 @@ export class AuthController {
   @Post('login')
   login(
     @Body() loginDto: LoginDto,
-    @Res({ passthrough: true }) response: Response,
+    @Res({ passthrough: true }) response: ResponseExpress,
   ) {
     return this.auth_service.login(loginDto, response);
   }
@@ -48,9 +47,8 @@ export class AuthController {
     return req.user;
   }
 
-  @Get('session')
-  getAuthSession(@Session() session: Record<string, any>) {
-    console.log(session);
-    console.log(session.id);
+  @Post('logout')
+  logout(@Res() res: ResponseExpress) {
+    return res.clearCookie('cookie').send({ message: 'Logged out' });
   }
 }
