@@ -12,6 +12,8 @@ import { CaslModule } from './casl/casl.module';
 import { logger } from './middleware/logger.middleware';
 import { VideoController } from './video/video.controller';
 import { UploadFileModule } from './upload-file/upload-file.module';
+import { VideoEntity } from './entity/video.entity';
+import { CategoryEntity } from './entity/category.entity';
 
 @Module({
   imports: [
@@ -23,7 +25,7 @@ import { UploadFileModule } from './upload-file/upload-file.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [Auth],
+      entities: [Auth, VideoEntity, CategoryEntity],
       //Setting synchronize: true shouldn't be used in production - otherwise you can lose production data.
       synchronize: true,
       autoLoadEntities: true,

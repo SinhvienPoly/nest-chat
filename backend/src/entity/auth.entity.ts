@@ -24,6 +24,6 @@ export class Auth {
   @Column({ default: true })
   is_active: boolean;
 
-  @Column({ default: Role.Admin })
+  @Column({ default: Role.User })
   role: Role;
 }
