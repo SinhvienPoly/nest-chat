@@ -11,6 +11,7 @@ import { VideoModule } from './video/video.module';
 import { CaslModule } from './casl/casl.module';
 import { logger } from './middleware/logger.middleware';
 import { VideoController } from './video/video.controller';
+import { UploadFileModule } from './upload-file/upload-file.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { VideoController } from './video/video.controller';
     UsersModule,
     VideoModule,
     CaslModule,
+    UploadFileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

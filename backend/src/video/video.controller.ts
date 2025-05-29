@@ -3,7 +3,7 @@ import { Body, Controller, Get, UseGuards } from '@nestjs/common';
 import { VideoService } from './video.service';
 import { VideoGuard } from './video.guard';
 
-@Controller('video')
+@Controller('api/v1/video')
 export class VideoController {
   constructor(private videoService: VideoService) {}
 

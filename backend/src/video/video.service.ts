@@ -14,4 +14,6 @@ export class VideoService {
   create() {
     return 'Create video';
   }
+
+  uploadFile() {}
 }
