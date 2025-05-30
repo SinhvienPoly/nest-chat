@@ -1,4 +1,11 @@
-import { PrimaryGeneratedColumn, Entity, Column, ManyToMany } from 'typeorm';
+import {
+  PrimaryGeneratedColumn,
+  Entity,
+  Column,
+  ManyToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { VideoEntity } from './video.entity';
 
 @Entity()
@@ -15,6 +22,12 @@ export class CategoryEntity {
   @ManyToMany(() => VideoEntity, (video) => video.categories)
   videos: VideoEntity[];
 
-  @Column()
+  @Column({ default: true })
   is_active: boolean;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }

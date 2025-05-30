@@ -14,6 +14,7 @@ import { VideoController } from './video/video.controller';
 import { UploadFileModule } from './upload-file/upload-file.module';
 import { VideoEntity } from './entity/video.entity';
 import { CategoryEntity } from './entity/category.entity';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { CategoryEntity } from './entity/category.entity';
     VideoModule,
     CaslModule,
     UploadFileModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

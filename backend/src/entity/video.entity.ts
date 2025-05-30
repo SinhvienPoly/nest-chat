@@ -4,6 +4,8 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { CategoryEntity } from './category.entity';
 
@@ -18,10 +20,10 @@ export class VideoEntity {
   @Column()
   description: string;
 
-  @Column()
+  @Column({ nullable: true, default: null })
   thumbnail: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: null })
   video_url: string;
 
   @Column('simple-array')
@@ -35,4 +37,10 @@ export class VideoEntity {
 
   @Column({ default: true })
   is_active: boolean;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }
