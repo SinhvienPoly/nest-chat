@@ -1,17 +1,39 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, MinLength } from 'class-validator';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
 
 export class VideoDto {
-  @IsNotEmpty({ message: 'Họ là bắt buộc' })
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty({ message: 'Tiêu đề là bắt buộc' })
   @MinLength(6, { message: 'Tiêu đề tối thiểu 6 kí tự' })
   @Type(() => String)
   title: string;
 
-  @IsNotEmpty({ message: 'Tên là bắt buộc' })
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty({ message: 'Mô tả là bắt buộc' })
   @Type(() => String)
   description: string;
 
-  @IsNotEmpty({ message: 'Email là bắt buộc' })
-  @Type(() => String)
-  thumbnail: string;
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true, message: 'Giá trị phải là định dạng string' })
+  @ArrayMinSize(1, { message: 'Tối thiểu 1 tagname' })
+  @Type(() => Array)
+  tags: string[];
+
+  @IsOptional()
+  @IsString()
+  thumbnail?: string;
+
+  @IsOptional()
+  @IsString()
+  video_url?: string;
 }
