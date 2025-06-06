@@ -1,6 +1,6 @@
-export interface VideoResponse {
+export interface CategoryResponse {
   status_code: number;
   success: boolean;
   message: string;
-  video?: any;
+  category?: any;
 }
