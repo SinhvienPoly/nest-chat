@@ -155,6 +155,14 @@ export class VideoService {
       .select('video.id')
       .getMany();
 
+    if (!videos || videos.length === 0) {
+      return {
+        message: 'IDs không tồn tại',
+        status_code: 400,
+        success: false,
+      };
+    }
+
     const existingIds = Array.isArray(videos) ? videos.map((v) => v.id) : [];
 
     await this.video_repository
